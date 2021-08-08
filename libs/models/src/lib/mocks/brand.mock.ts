@@ -2,7 +2,8 @@ import { Brand } from '../models/brand.model';
 
 
 const getDefaults = (): Brand => ({
-  name: 'Fake Brand',
+  brandId: 1,
+  name: 'Fake Brand'
 });
 
 export const getBrandMock = (brand?: Partial<Brand>): Brand => ({

@@ -15,21 +15,6 @@
   }
 }
 
-@keyframes rotate2 {
-  0% {
-    transform: rotate(0deg);
-    border-top-color: $mycloud-bg-color-light;
-  }
-  50% {
-    transform: rotate(180deg);
-    border-top-color: $mc-primary;
-  }
-  100% {
-    transform: rotate(360deg);
-    border-top-color: $mycloud-bg-color-light;
-  }
-}
-
 * {
   box-sizing: border-box;
 }
@@ -48,44 +33,29 @@
   flex-direction: column;
 
   .loader {
-    // background: red;
     align-self: center;
     width: 150px;
     height: 150px;
+
     div {
       height: 100%;
     }
   }
-  
-  /* loader 1 */
-  .loader1, .loader1 div {
-    @include loaderDivMixin;
-    border-top-color: $mycloud-bg-color-light;
-    border-bottom-color: $mc-primary;
-  }
-  
-  /*loader 2  */
-  .loader2, .loader2 div {
-    @include loaderDivMixin;
-    border-top-color: $mc-primary;
-    border-left-color: $mycloud-bg-color-light;
-    border-right-color: $mycloud-bg-color-light;
-  }
-  
-  /*loader 3  */
-  .loader3, .loader3 div {
+
+  /* loader animation */
+  .animation, .animation div {
     @include loaderDivMixin;
     border-top-color: $mycloud-bg-color-light;
     border-left-color: $mc-primary;
     animation-timing-function: cubic-bezier(.55, .38, .21, .88);
     animation-duration: 3s;
   }
-  
+
   div:hover {
     animation-play-state: paused;
   }
-  
+
   .loader, .loader * {
     will-change: transform;
-  }  
+  }
 }

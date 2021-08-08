@@ -40,8 +40,8 @@ export class CampaignService extends GlobalService {
    * Retrieve the list of brands - API call
    */
    public getAllBrandsFromApi(): Observable<Brand[]> {
-    const url = `${this.baseUrlCampaign}/brands`; // API endpoint (if we use real API)
-    // const url = MOCK_URL_BRANDS; // Static JSON Mock (if we don't use real API)
+    // const url = `${this.baseUrlCampaign}/brands`; // API endpoint (if we use real API)
+    const url = MOCK_URL_BRANDS; // Static JSON Mock (if we don't use real API)
 
     return this.http.get<Brand[]>(url);
   }
@@ -56,6 +56,7 @@ export class CampaignService extends GlobalService {
         delay(1000),
         map((brands: Brand[]) => {
           const brandsWellFormatted = brands.map((brand: Brand) => new Brand({
+            brandId: brand.brandId,
             name: brand.name
           }));
           // console.log(brandsWellFormatted[0].constructor.name);
@@ -75,8 +76,8 @@ export class CampaignService extends GlobalService {
    * Retrieve the list of campaigns - API call
    */
    public getAllCampaignsFromApi(): Observable<{ totalVolume: number, requests: Campaign[]}> {
-    const url = `${this.baseUrlCampaign}/campaigns`; // API endpoint (if we use real API)
-    // const url = MOCK_URL_PAYLOAD_RMP; // Static JSON Mock (if we don't use real API)
+    // const url = `${this.baseUrlCampaign}/campaigns`; // API endpoint (if we use real API)
+    const url = MOCK_URL_PAYLOAD_RMP; // Static JSON Mock (if we don't use real API)
 
     return this.http.get<{ totalVolume: number, requests: Campaign[]}>(url);
   }
@@ -92,7 +93,11 @@ export class CampaignService extends GlobalService {
         map((response: { totalVolume: number, requests: Campaign[]}) => response.requests),
         map((campaigns: Campaign[]) => {
           const campaignsWellFormatted = campaigns.map((campaign: Campaign) => new Campaign({
-            campaignName: campaign.campaignName
+            campaignName: campaign.campaignName,
+            advice: campaign.advice,
+            brand: campaign.brand,
+            submittedDate: campaign.submittedDate,
+            requestStatus: campaign.requestStatus
           }));
           // console.log(campaignsWellFormatted[0].constructor.name);
           return campaignsWellFormatted;

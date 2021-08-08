@@ -3,7 +3,7 @@
     "requests": [
         {
             "requestId": 1,
-            "advice": false,
+            "advice": null,
             "campaignName": "Titre campagne Test 1",
             "campaignDescription": "Lorem ipsum",
             "decisionDeadline": "2020-08-27T00:00:00+00:00",
