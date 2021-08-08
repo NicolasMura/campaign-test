@@ -18,10 +18,16 @@
             "tsConfig": "apps/frontend-public/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "apps/frontend-public/src/favicon.ico",
-              "apps/frontend-public/src/assets"
+              "apps/frontend-public/src/assets",
+              "apps/frontend-public/src/env.js"
             ],
-            "styles": ["apps/frontend-public/src/styles.scss"],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "apps/frontend-public/src/styles.scss"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [ "libs/frontend-tools/src/lib/styles" ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -116,6 +122,77 @@
           "builder": "@nrwl/linter:eslint",
           "options": {
             "lintFilePatterns": ["apps/frontend-public-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "frontend-tools": {
+      "projectType": "library",
+      "root": "libs/frontend-tools",
+      "sourceRoot": "libs/frontend-tools/src",
+      "prefix": "campaign-test",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/frontend-tools"],
+          "options": {
+            "jestConfig": "libs/frontend-tools/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/frontend-tools/src/**/*.ts",
+              "libs/frontend-tools/src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "models": {
+      "root": "libs/models",
+      "sourceRoot": "libs/models/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/models/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/models"],
+          "options": {
+            "jestConfig": "libs/models/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "vendors": {
+      "projectType": "library",
+      "root": "libs/vendors",
+      "sourceRoot": "libs/vendors/src",
+      "prefix": "campaign-test",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/vendors"],
+          "options": {
+            "jestConfig": "libs/vendors/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/vendors/src/**/*.ts",
+              "libs/vendors/src/**/*.html"
+            ]
           }
         }
       }

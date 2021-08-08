@@ -33,6 +33,15 @@
     "frontend-public-e2e": {
       "tags": [],
       "implicitDependencies": ["frontend-public"]
+    },
+    "frontend-tools": {
+      "tags": []
+    },
+    "models": {
+      "tags": []
+    },
+    "vendors": {
+      "tags": []
     }
   }
 }

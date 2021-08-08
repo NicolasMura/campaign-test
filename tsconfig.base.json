@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@campaign-test/frontend-tools": ["libs/frontend-tools/src/index.ts"],
+      "@campaign-test/models": ["libs/models/src/index.ts"],
+      "@campaign-test/vendors": ["libs/vendors/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

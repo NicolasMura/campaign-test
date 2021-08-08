@@ -1,105 +1,76 @@
+<p align="center">
+  @TODO
+  <a href="https://campaign-test.nicolasmura.com">
+    <img alt="Campaign test image" src="./apps/frontend-public/src/assets/icons/icon-384x384.png" width="400" />
+  </a>
+</p>
 
+# Campaign Test
 
-# CampaignTest
+Fullstack monorepo for Campaign test project. With Angular frontend for now, but could add a NestJS backend REST API.
 
-This project was generated using [Nx](https://nx.dev).
+- [Campaign Test](#campaign-test)
+- [Requirements](#requirements)
+- [Quick start](#quick-start)
+- [Methodology](#methodology)
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+# Requirements
 
-🔎 **Smart, Extensible Build Framework**
+To contribute to this project and run it locally, you will need:
 
-## Quick Start & Documentation
+* [Node JS >= v12.19.0 & NPM >= 6.14.8](https://nodejs.org/en)
+* [Angular 11.x](https://angular.io)
+* [Typescript >= 4.0.5](https://www.typescriptlang.org)
+* [Docker >= 20.10.5](https://www.docker.com/)
 
-[Nx Documentation](https://nx.dev/angular)
+> :bulb: **_Tip_**
+>
+> [Microsoft VS Code editor](https://code.visualstudio.com/) is already packaged with Typescript.
 
-[10-minute video showing all Nx features](https://nx.dev/getting-started/intro)
+# Quick start
 
-[Interactive Tutorial](https://nx.dev/tutorial/01-create-application)
+@TODO
+```bash
+  git clone @TODO
+  cd campaign-test
+```
 
-## Adding capabilities to your workspace
+# Methodology
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+This project was generated using [Nx](https://nx.dev) and below command:
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+```bash
+  npx create-nx-workspace --preset=angular
+```
 
-Below are our core plugins:
+`frontend-tools` and `vendors` Angular libraries were generated running the 'lib' Angular generator with Nx project support:
 
-- [Angular](https://angular.io)
-  - `ng add @nrwl/angular`
-- [React](https://reactjs.org)
-  - `ng add @nrwl/react`
-- Web (no framework frontends)
-  - `ng add @nrwl/web`
-- [Nest](https://nestjs.com)
-  - `ng add @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `ng add @nrwl/express`
-- [Node](https://nodejs.org)
-  - `ng add @nrwl/node`
+```bash
+  npx nx g @nrwl/angular:lib frontend-tools
+  npx nx g @nrwl/angular:lib vendors
+```
 
-There are also many [community plugins](https://nx.dev/community) you could add.
+`models` global shared library was generated running the Nx workspace 'lib' generator:
 
-## Generate an application
+```bash
+  npx nx g @nrwl/workspace:lib models
+```
 
-Run `ng g @nrwl/angular:app my-app` to generate an application.
+`campaign` routed module was generated inside `frontend-public` Angular project running the 'module' Angular generator with Nx project support:
 
-> You can use any of the plugins above to generate applications as well.
+```bash
+  nx g @nrwl/angular:module modules/campaign --project frontend-public --routing true
+```
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+`campaign-list` and `campaign-update` components were generated inside `frontend-public` Angular project running the 'component' Angular generator with Nx project support:
 
-## Generate a library
+```bash
+  nx g @nrwl/angular:component modules/campaign/campaign-list --project frontend-public
+  nx g @nrwl/angular:component modules/campaign/campaign-update --project frontend-public
+```
 
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
+`campaign` service was generated inside `frontend-public` Angular library running the 'service' Angular generator with Nx project support:
 
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are shareable across libraries and applications. They can be imported from `@campaign-test/mylib`.
-
-## Development server
-
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng g component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
-
-
-
-
-
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+```bash
+  nx g @nrwl/angular:service services/campaign --project frontend-tools --flat
+```

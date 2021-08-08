@@ -1,0 +1,26 @@
+<div *ngIf="errors.somethingIsBroken.statusCode">Something is broken</div>
+
+<mat-table [dataSource]="dataSource">
+
+  <!-- Campaign Name column -->
+  <ng-container matColumnDef="campaignName">
+    <mat-header-cell *matHeaderCellDef>
+      Name
+    </mat-header-cell>
+    <mat-cell *matCellDef="let campaign;">
+      {{ campaign.campaignName }}
+    </mat-cell>
+  </ng-container>
+
+  <!-- Header and Row Declaration -->
+  <mat-header-row *matHeaderRowDef="displayedColumns">
+  </mat-header-row>
+  <mat-row *matRowDef="let campaign; columns: displayedColumns;">
+  </mat-row>
+
+  <!-- Row shown when there is no matching data. -->
+  <tr class="mat-row subscription-row matNoDataRow" *matNoDataRow>
+    <td class="subscription-cell">No data.</td>
+  </tr>
+
+</mat-table>

@@ -1,10 +1,14 @@
 import { TestBed } from '@angular/core/testing';
+import { MatIconModule } from '@angular/material/icon';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AppComponent],
+      imports: [
+        MatIconModule
+      ]
     }).compileComponents();
   });
 
