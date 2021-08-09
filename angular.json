@@ -19,10 +19,15 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "apps/frontend-public/src/assets",
-              "apps/frontend-public/src/env.js"
+              "apps/frontend-public/src/env.js",
+              {
+                "glob": "**/*",
+                "input": "./libs/frontend-tools/src/lib/assets/",
+                "output": "./assets"
+              }
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "apps/frontend-public/src/styles.scss"
             ],
             "stylePreprocessorOptions": {

@@ -69,6 +69,14 @@ This project was generated using [Nx](https://nx.dev) and below command:
   nx g @nrwl/angular:component modules/campaign/campaign-update --project frontend-public
 ```
 
+Similarly, `campaign-components` module and `campaign-form` component were generated inside `frontend-public` Angular project running:
+
+```bash
+  nx g @nrwl/angular:module modules/campaign/components/campaign-components --project frontend-public --flat true
+  nx g @nrwl/angular:component modules/campaign/components/campaign-form --project frontend-public
+```
+
+
 `campaign` service was generated inside `frontend-public` Angular library running the 'service' Angular generator with Nx project support:
 
 ```bash

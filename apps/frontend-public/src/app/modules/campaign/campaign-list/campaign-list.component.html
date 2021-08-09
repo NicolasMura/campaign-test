@@ -1,15 +1,36 @@
-<div *ngIf="errors.somethingIsBroken.statusCode">Something is broken</div>
+<!-- In case something is broken -->
+<campaign-test-something-is-broken *ngIf="errors.somethingIsBroken.statusCode"
+                                  [statusCode]="errors.somethingIsBroken.statusCode"
+                                  [statusMessage]="errors.somethingIsBroken.statusMessage">
+</campaign-test-something-is-broken>
 
 <div class="wrapper">
-  <div class="overlay" *ngIf="isListRefreshing" style="height: 300px;">
+  <div class="overlay" *ngIf="isListRefreshing">
     <mat-spinner></mat-spinner>
   </div>
 </div>
 
 <div [class.opacity]="isListRefreshing">
-  <div *ngIf="dataSource?.data && dataSource.data.length > 0">
+  <div *ngIf="dataSource?.data && dataSource.data.length > 0" @fadeInOutAnimation>
     <!-- Search filter -->
-    <!-- @TODO -->
+    <mat-form-field class="search" appearance="fill">
+      <mat-label>Search by name or brand... (CTRL + F)</mat-label>
+      <input matInput type="text" [(ngModel)]="searchInput" (input)="applySearch()" #searchInputRef>
+      <button mat-button *ngIf="searchInput" matSuffix mat-icon-button aria-label="Clear" (click)="searchInput=''; applySearch();">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <!-- Brand filter -->
+    <mat-form-field appearance="fill">
+      <mat-label>- Brand -</mat-label>
+      <mat-select [(ngModel)]="campaignService.selectedBrand" (selectionChange)="applySearch();">
+        <mat-option>Toutes</mat-option>
+        <mat-option *ngFor="let brand of campaignService?.availableBrands" [value]="brand" class="with-icons">
+          {{ brand.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
     <mat-table [dataSource]="dataSource">
 
@@ -19,6 +40,7 @@
           Status
         </mat-header-cell>
         <mat-cell *matCellDef="let campaign;">
+          <mat-icon>hourglass_empty</mat-icon>
           {{ campaign.requestStatus.name }}
         </mat-cell>
       </ng-container>
@@ -63,6 +85,19 @@
         </mat-cell>
       </ng-container>
 
+      <!-- Campaign Submission date column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let campaign;">
+          <button mat-icon-button aria-label="Edit"
+                  (click)="goToCampaignUpdate(campaign)"
+                  matTooltip="Edit this campaign">
+            <mat-icon>arrow_forward_ios</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
       <!-- Header and Row Declaration -->
       <mat-header-row *matHeaderRowDef="displayedColumns">
       </mat-header-row>
@@ -71,7 +106,8 @@
 
       <!-- Row shown when there is no matching data. -->
       <tr class="mat-row subscription-row matNoDataRow" *matNoDataRow>
-        <td class="subscription-cell">No data.</td>
+        <td class="subscription-cell" *ngIf="dataSource?.data?.length === 0">No campaign.</td>
+        <td class="subscription-cell" *ngIf="dataSource?.data?.length !== 0">No campaign matching your filter '{{ searchInput }}'.</td>
       </tr>
 
     </mat-table>

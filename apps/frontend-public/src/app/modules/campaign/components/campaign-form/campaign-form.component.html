@@ -1,0 +1,76 @@
+<div class="admin-form">
+  <div class="title">Update campaign</div>
+
+  <form [formGroup]="campaignForm" #form>
+    <mat-error *ngIf="errors.update" class="error">
+      Sorry, an error has occurred while updating your campaign
+    </mat-error>
+
+    <div class="wrapper">
+
+      <div class="inputs">
+
+        <!-- Brand -->
+        <div>Brand *</div>
+        <mat-form-field appearance="fill">
+          <!-- <mat-label>Brand *</mat-label> -->
+          <mat-select formControlName="brandId">
+            <mat-option *ngFor="let brand of brands" [value]="brand.brandId" class="with-icons">
+              {{ brand.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="campaignForm.controls['brandId'].hasError('required')">
+            Field is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Name -->
+        <div>Campaign name *</div>
+        <mat-form-field appearance="fill" floatLabel="always">
+          <!-- <mat-label>Campaign name *</mat-label> -->
+          <input matInput type="text" formControlName="campaignName" placeholder="Ex.: Campagne Test 6">
+          <mat-error *ngIf="campaignForm.controls['campaignName'].hasError('required')">
+            Field is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Medias -->
+        <div>Media *</div>
+        <div formArrayName="media">
+          <mat-checkbox *ngFor="let media of medias; let i = index" [checked]="check(media)" (change)="onCbChange($event, media)">{{ media.value }}</mat-checkbox>
+          <mat-error *ngIf="campaignForm.controls['media'].hasError('required')">
+            At least one value is required
+          </mat-error>
+        </div>
+
+        <!-- Deadline date -->
+        <div>Deadline for decision *</div>
+        <mat-form-field appearance="fill" (click)="picker.open()">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="decisionDeadline" readonly>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker disabled="false"></mat-datepicker>
+        </mat-form-field>
+
+      </div>
+
+      <button mat-flat-button color="primary" aria-label="submit"
+              (click)="updateCampaign()"
+              [disabled]="!campaignForm.valid || submitLoadingSpinner"
+              [class.mc-spinner]="submitLoadingSpinner"
+              class="submit">
+        <span>Submit</span>
+      </button>
+
+      <mat-error *ngIf="errors.update" class="error">
+        Sorry, an error has occurred while updating your campaign
+      </mat-error>
+
+    </div>
+
+    <!-- Debug form START -->
+    <pre style="font-size:15px">DEBUG</pre>
+    <pre style="font-size:15px">{{ campaignForm?.getRawValue() | json }}</pre>
+    <!-- Debug form END -->
+  </form>
+</div>

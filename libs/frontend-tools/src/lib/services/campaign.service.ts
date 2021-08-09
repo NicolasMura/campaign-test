@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { delay, catchError, map, mergeMap } from 'rxjs/operators';
+import { delay, catchError, map, tap } from 'rxjs/operators';
 import { environment } from '@campaign-test/frontend-tools';
 import { Brand, Campaign } from '@campaign-test/models';
 import { GlobalService } from './global-service.service';
@@ -27,6 +27,22 @@ export class CampaignService extends GlobalService {
    * API endpoint
    */
   public campaignsList: Brand[] = [];
+  /**
+   * Selected campaign for update
+   */
+  public selectedCampaign: Campaign | null = null;
+  /**
+   * All brands
+   */
+  public allBrands: Brand[] = [];
+  /**
+   * Available brands retrieved from campaigns
+   */
+  public availableBrands: Brand[] = [];
+  /**
+   * Selected campaign for update
+   */
+  public selectedBrand: Brand | null = null;
 
   constructor(
     private http: HttpClient,
@@ -40,8 +56,8 @@ export class CampaignService extends GlobalService {
    * Retrieve the list of brands - API call
    */
    public getAllBrandsFromApi(): Observable<Brand[]> {
-    // const url = `${this.baseUrlCampaign}/brands`; // API endpoint (if we use real API)
-    const url = MOCK_URL_BRANDS; // Static JSON Mock (if we don't use real API)
+    const url = `${this.baseUrlCampaign}/brands`; // API endpoint (if we use real API)
+    // const url = MOCK_URL_BRANDS; // Static JSON Mock (if we don't use real API)
 
     return this.http.get<Brand[]>(url);
   }
@@ -53,31 +69,31 @@ export class CampaignService extends GlobalService {
 
     return this.getAllBrandsFromApi()
       .pipe(
+        // retry(3),
+        // timeout(5000),
         delay(1000),
         map((brands: Brand[]) => {
-          const brandsWellFormatted = brands.map((brand: Brand) => new Brand({
+          const brandsWellFormatted: Brand[] = brands.map((brand: Brand) => new Brand({
             brandId: brand.brandId,
             name: brand.name
           }));
           // console.log(brandsWellFormatted[0].constructor.name);
+
+          // store the value in the service
+          this.allBrands = brandsWellFormatted;
+
           return brandsWellFormatted;
         }),
         catchError(error => this.handleError(error))
       )
-      // .toPromise()
-      // .then((brands: Brand[]) => [null, brands] as any)
-      // // .catch(err => {
-      // //   this.handleErrorTest(err)
-      // //   return [err]
-      // // });
   }
 
   /**
    * Retrieve the list of campaigns - API call
    */
    public getAllCampaignsFromApi(): Observable<{ totalVolume: number, requests: Campaign[]}> {
-    // const url = `${this.baseUrlCampaign}/campaigns`; // API endpoint (if we use real API)
-    const url = MOCK_URL_PAYLOAD_RMP; // Static JSON Mock (if we don't use real API)
+    const url = `${this.baseUrlCampaign}/campaigns`; // API endpoint (if we use real API)
+    // const url = MOCK_URL_PAYLOAD_RMP; // Static JSON Mock (if we don't use real API)
 
     return this.http.get<{ totalVolume: number, requests: Campaign[]}>(url);
   }
@@ -89,26 +105,49 @@ export class CampaignService extends GlobalService {
 
     return this.getAllCampaignsFromApi()
       .pipe(
-        delay(1000),
+        // delay(1000),
         map((response: { totalVolume: number, requests: Campaign[]}) => response.requests),
         map((campaigns: Campaign[]) => {
-          const campaignsWellFormatted = campaigns.map((campaign: Campaign) => new Campaign({
+          const campaignsWellFormatted: Campaign[] = campaigns.map((campaign: Campaign) => new Campaign({
+            requestId: campaign.requestId,
             campaignName: campaign.campaignName,
             advice: campaign.advice,
             brand: campaign.brand,
             submittedDate: campaign.submittedDate,
-            requestStatus: campaign.requestStatus
+            requestStatus: campaign.requestStatus,
+            media: campaign.media,
+            decisionDeadline: campaign.decisionDeadline
           }));
           // console.log(campaignsWellFormatted[0].constructor.name);
           return campaignsWellFormatted;
         }),
+        tap((campaigns: Campaign[]) => {
+          if (this.availableBrands.length === 0) {
+            // Get available brands
+            this.availableBrands = campaigns.reduce(
+              (
+                result: Brand[],
+                currentCampaign: Campaign
+              ) => {
+                const existingBrandObject: Brand | undefined = result.find(
+                  (brandObject: Brand) =>
+                    brandObject.name === currentCampaign.brand.name
+                );
+                if (!existingBrandObject) {
+                  result.push(currentCampaign.brand);
+                }
+
+                return result;
+              },
+              []
+            );
+          }
+
+          // Sort them by id
+          this.availableBrands.sort((b1: Brand, b2: Brand) => b1.brandId - b2.brandId);
+          console.log(this.availableBrands);
+        }),
         catchError(error => this.handleError(error))
       )
-      // .toPromise()
-      // .then((campaigns: Campaign[]) => [null, campaigns] as any)
-      // // .catch(err => {
-      // //   this.handleErrorTest(err)
-      // //   return [err]
-      // // });
   }
 }

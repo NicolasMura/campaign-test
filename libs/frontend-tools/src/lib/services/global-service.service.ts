@@ -18,11 +18,4 @@ export class GlobalService {
     // Re-throw it back to service or component
     return throwError(error);
   }
-
-  handleErrorTest(error: any): HttpErrorResponse | Error | any {
-    // send error notification to user
-    this.errorHandlingService.handleError(error);
-    // Re-throw it back to service or component
-    return error;
-  }
 }

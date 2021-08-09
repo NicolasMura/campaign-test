@@ -10,7 +10,7 @@
 */
 // @TODO : https://medium.com/@aditya_tyagi/import-fonts-in-an-angular-app-the-easy-right-way-ae9e99cab551
 $roboto-font-path: "~roboto-fontface/fonts";
-@import "~roboto-fontface/css/roboto/sass/roboto-fontface";
+// @import "~roboto-fontface/css/roboto/sass/roboto-fontface";
 
 html, body {
   height: 100%;
@@ -18,10 +18,6 @@ html, body {
 
 body {
   margin: 0;
-  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
-  display: grid;
-  justify-items: center;
-  align-items: center;
   background-color: $mycloud-bg-color-darker;
 
   p {
@@ -31,23 +27,7 @@ body {
 }
 
 ::selection {
-  background: lighten($mc-primary, 10%);
-}
-
-mc-root {
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  flex-direction: column;
-  position: absolute;
-  top: 72px;
-  bottom: 0;
-  left: 0;
-  right: 0;*
-
-  &.maintenance-mode {
-    top: 0px; // no place for header (= disabled) when app is in maintenance mode
-  }
+  background: lighten($mc-secondary, 10%);
 }
 
 .mc-color-primary {

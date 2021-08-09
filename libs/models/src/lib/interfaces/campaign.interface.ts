@@ -1,7 +1,9 @@
 import { Brand } from "../models/brand.model";
+import { Media } from "../models/media.model";
 
 
 export interface ICampaign {
+  requestId: number;
   campaignName: string;
   advice: boolean;
   brand: Brand;
@@ -11,7 +13,9 @@ export interface ICampaign {
     name: CampaignStatus,
     value: string,
     step: number
-  }
+  },
+  media: Media[];
+  decisionDeadline: string;
 }
 
 export enum CampaignStatus {
