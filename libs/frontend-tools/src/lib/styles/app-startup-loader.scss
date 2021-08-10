@@ -45,8 +45,8 @@
   /* loader animation */
   .animation, .animation div {
     @include loaderDivMixin;
-    border-top-color: $mycloud-bg-color-light;
-    border-left-color: $mc-primary;
+    border-top-color: $cpt-bg-color-light;
+    border-left-color: $cpt-primary;
     animation-timing-function: cubic-bezier(.55, .38, .21, .88);
     animation-duration: 3s;
   }

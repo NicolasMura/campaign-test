@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { NotificationService } from '@campaign-test/frontend-tools';
+import { CampaignService, NotificationService } from '@campaign-test/frontend-tools';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Brand, Campaign, Media } from '@campaign-test/models';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-// import { fadeInOutAnimation } from 'projects/lib-mycloud/src/lib/shared/animations/animations';
 
 
 /**
@@ -13,8 +12,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 @Component({
   selector: 'campaign-test-campaign-form',
   templateUrl: './campaign-form.component.html',
-  styleUrls: ['./campaign-form.component.scss'],
-  // animations: [fadeInOutAnimation]
+  styleUrls: ['./campaign-form.component.scss']
 })
 export class CampaignFormComponent implements OnInit {
   /**
@@ -22,7 +20,6 @@ export class CampaignFormComponent implements OnInit {
    */
   @Input() public set campaign(campaign: Campaign) {
     if (campaign) {
-      console.log(campaign);
       this.campaignForm.addControl('requestId', new FormControl({ value: campaign.requestId, disabled: true }));
 
       this.campaignForm.patchValue({
@@ -57,7 +54,7 @@ export class CampaignFormComponent implements OnInit {
    */
   public brands: Brand[] = [];
   /**
-   * Action output (create or update)
+   * Action output (update)
    */
   @Output() private action: EventEmitter<string> = new EventEmitter<string>();
   /**
@@ -85,7 +82,7 @@ export class CampaignFormComponent implements OnInit {
   /**
    * Available medias
    */
-  medias: Media[] = [
+  public medias: Media[] = [
     new Media({ mediaId: 1, name: 'LABELING_PACKAGING', value: 'Label/Packaging' }),
     new Media({ mediaId: 2, name: 'NEW_PRODUCT_INNOVATION', value: 'New Product/innovation' }),
     new Media({ mediaId: 3, name: 'OOH', value: 'OOH' }),
@@ -101,6 +98,7 @@ export class CampaignFormComponent implements OnInit {
   ];
 
   constructor(
+    private campaignService: CampaignService,
     private notificationService: NotificationService
   ) {
     // initialize form
@@ -115,7 +113,6 @@ export class CampaignFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Bouh');
   }
 
   check(media: Media): boolean {
@@ -125,7 +122,6 @@ export class CampaignFormComponent implements OnInit {
   onCbChange(event: MatCheckboxChange, media: Media): void {
     const array: FormArray = this.campaignForm.get('media') as FormArray;
 
-    console.log(event);
     if (event.checked) {
       array.push(new FormControl(media));
     } else {
@@ -144,23 +140,23 @@ export class CampaignFormComponent implements OnInit {
    * Update campaign
    */
    public updateCampaign(): void {
-    // if (this.permissionForm.valid) {
-    //   this.submitLoadingSpinner = true;
-    //   this.permissionForm.disable();
+    if (this.campaignForm.valid) {
+      this.submitLoadingSpinner = true;
+      this.campaignForm.disable();
 
-    //   this.permissionService.updatePermission(this.permissionForm.getRawValue())
-    //     .subscribe((updatedPermission: Permission) => {
-    //       this.submitLoadingSpinner = false;
-    //       this.permissionForm.enable();
-    //       this.notificationService.sendNotification('Permission updated successfully', '', { duration: 5000 });
-    //       this.action.emit('update');
-    //     }, error => {
-    //       console.error(error);
-    //       this.submitLoadingSpinner = false;
-    //       this.errors.update = true;
-    //       this.permissionForm.enable();
-    //     });
-    // }
+      this.campaignService.updateCampaign(this.campaignForm.getRawValue())
+        .subscribe((updatedCampaign: Campaign) => {
+          this.submitLoadingSpinner = false;
+          this.campaignForm.enable();
+          this.notificationService.sendNotification('Permission updated successfully (fake)', '', { duration: 5000 });
+          this.action.emit('update');
+        }, error => {
+          console.error(error);
+          this.submitLoadingSpinner = false;
+          this.errors.update = true;
+          this.campaignForm.enable();
+        });
+    }
   }
 
 }

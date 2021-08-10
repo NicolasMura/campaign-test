@@ -23,7 +23,7 @@ export class Campaign implements ICampaign {
     this.campaignName = campaign.campaignName || 'Not defined';
     this.advice = typeof campaign.advice == 'boolean' ? campaign.advice : false;
     this.brand = campaign.brand || { brandId: 0, name: 'Not defined' };
-    this.submittedDate = campaign.submittedDate || 'Not defined';
+    this.submittedDate = campaign.submittedDate || '';
     this.requestStatus = campaign.requestStatus;
     this.media = campaign.media.map((media: Media) => new Media(media));
     this.decisionDeadline = campaign.decisionDeadline || '2000-01-01T00:00:00.00+00:00';

@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { CampaignService, CoreConstants, fadeInOutAnimation } from '@campaign-test/frontend-tools';
-import { Brand, Campaign } from '@campaign-test/models';
+import { Brand, Campaign, CampaignStatus, CampaignStatusIcons } from '@campaign-test/models';
 
 
 /**
@@ -55,6 +55,14 @@ export class CampaignListComponent implements OnInit {
   @ViewChild('searchInputRef', { static: false }) private set input(searchInputRef: ElementRef) {
     this.searchInputRef = searchInputRef;
   }
+  /**
+   * Campaign available status for use in template
+   */
+  public campaignAvailableStatus = CampaignStatus;
+  /**
+   * Campaign available status icons for use in template
+   */
+  public campaignAvailableStatusIcons = CampaignStatusIcons;
 
   constructor(
     private router: Router,
@@ -87,7 +95,6 @@ export class CampaignListComponent implements OnInit {
       this.campaignService.getAllCampaigns()
       .toPromise()
       .then((campaigns: Campaign[]) => {
-        console.log(campaigns);
         resolve(campaigns);
       }, error => {
         console.error(error);

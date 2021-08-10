@@ -1,22 +1,15 @@
 // Import material theming functions
 @import '~@angular/material/theming';
 
-/* generics colors */
-$mycloud-bg-color-darker: #333333;
-$mycloud-bg-color-light: #eeeff5;
-$menu-font-color: $mycloud-bg-color-light;
-$mc-light-grey: #f5f5f5;
+// Generics colors
+$cpt-bg-color-darker: #333333;
+$cpt-bg-color-light: #eeeff5;
 
-/* Custom Theme */
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
+// Custom Theme
 @include mat-core();
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$mc-purple: (
+// Palettes for custom theme using the Material Design palettes available in palette.scss
+$cpt-purple: (
   50: #884aa3,
   100: #884aa3,
   200: #884aa3,
@@ -49,7 +42,7 @@ $mc-purple: (
   )
 );
 
-$mc-yellow: (
+$cpt-yellow: (
   50: #ffff74,
   100: #ffff74,
   200: #ffff74,
@@ -82,18 +75,17 @@ $mc-yellow: (
   )
 );
 
-$mc-primary: mat-color(mat-palette($mc-purple, 500));
-$mc-secondary: mat-color(mat-palette($mc-yellow, 500));
-$mc-warn: mat-color(mat-palette($mat-red, 500));
+$cpt-primary: mat-color(mat-palette($cpt-purple, 500));
+$cpt-secondary: mat-color(mat-palette($cpt-yellow, 500));
+$cpt-warn: mat-color(mat-palette($mat-red, 500));
 
-.mycloud-theme {
-  $primary: mat-palette($mc-purple);
-  $accent:  mat-palette($mc-yellow);
+.cpt-theme {
+  $primary: mat-palette($cpt-purple);
+  $accent:  mat-palette($cpt-yellow);
   $warn:    mat-palette($mat-red, 500);
 
-  // Create the theme object. A theme consists of configurations for individual
-  // theming systems such as `color` or `typography`.
-  $mycloud-theme: mat-light-theme((
+  // Create the theme object
+  $cpt-theme: mat-light-theme((
     color: (
       primary: $primary,
       accent: $accent,
@@ -101,20 +93,6 @@ $mc-warn: mat-color(mat-palette($mat-red, 500));
     )
   ));
 
-  // Include theme styles for core and each component used in your app.
-  // Alternatively, you can import and @include the theme mixins for each component
-  // that you are using.
-  @include angular-material-theme($mycloud-theme);
-}
-
-.mc-color {
-  &.primary {
-    color: $mc-primary;
-  }
-}
-
-.mc-border-color {
-  &.primary {
-    border-color: $mc-primary;
-  }
+  // Include theme styles for core and each component used in the app
+  @include angular-material-theme($cpt-theme);
 }

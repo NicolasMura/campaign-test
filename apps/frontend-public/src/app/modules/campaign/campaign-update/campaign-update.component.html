@@ -1,38 +1,36 @@
-<div class="admin-add-or-update-page" #top @fadeInOutAnimation>
-  <div class="content">
+<div class="content" @fadeInOutAnimation>
 
-    <button (click)="goBackToCampaignsList()"
-            mat-icon-button aria-label="arrow_back"
-            matTooltip="Back to campaigns list">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
+  <button (click)="goBackToCampaignsList()"
+          mat-icon-button aria-label="arrow_back"
+          matTooltip="Back to campaigns list">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
 
-    <!-- In case something is broken -->
-    <campaign-test-something-is-broken *ngIf="errors.somethingIsBroken.statusCode"
-                                [statusCode]="errors.somethingIsBroken.statusCode"
-                                [statusMessage]="errors.somethingIsBroken.statusMessage">
-    </campaign-test-something-is-broken>
+  <!-- In case something is broken -->
+  <campaign-test-something-is-broken *ngIf="errors.somethingIsBroken.statusCode"
+                              [statusCode]="errors.somethingIsBroken.statusCode"
+                              [statusMessage]="errors.somethingIsBroken.statusMessage">
+  </campaign-test-something-is-broken>
 
-    <mat-error *ngIf="errors.getAvailableBrands" class="error">
-      Sorry, an error has occurred while retrieving brands
-    </mat-error>
+  <mat-error *ngIf="errors.getAvailableBrands" class="error">
+    Sorry, an error has occurred while retrieving brands
+  </mat-error>
 
-    <div class="wrapper">
-      <div class="overlay" *ngIf="showFormLoadingSpinner" style="height: 100%;">
-        <mat-spinner></mat-spinner>
-      </div>
-
-      <div [class.opacity]="showFormLoadingSpinner">
-        <!-- Form -->
-        <div class="add-or-update-form-container mat-elevation-z1">
-          <campaign-test-campaign-form *ngIf="campaign"
-                                       [campaign]="campaign"
-                                       [availableBrands]="campaignService.availableBrands"
-                                       (update)="goBackToCampaignsList()">
-          </campaign-test-campaign-form>
-        </div>
-      </div>
+  <div class="wrapper">
+    <div class="overlay" *ngIf="showFormLoadingSpinner">
+      <mat-spinner></mat-spinner>
     </div>
 
+    <div [class.opacity]="showFormLoadingSpinner">
+      <!-- Form -->
+      <div class="add-or-update-form-container">
+        <campaign-test-campaign-form *ngIf="campaign"
+                                      [campaign]="campaign"
+                                      [availableBrands]="campaignService.availableBrands"
+                                      (action)="goBackToCampaignsList()">
+        </campaign-test-campaign-form>
+      </div>
+    </div>
   </div>
+
 </div>

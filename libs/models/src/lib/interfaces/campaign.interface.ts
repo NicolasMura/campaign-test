@@ -26,3 +26,12 @@ export enum CampaignStatus {
   TO_MODIFY = 'TO_MODIFY',
   SUBMITTED = 'SUBMITTED'
 }
+
+export enum CampaignStatusIcons {
+  DRAFT = 'hourglass_empty',
+  TO_REVIEW = 'hourglass_empty',
+  VALIDATED = 'task_alt',
+  REJECTED = 'cancel',
+  TO_MODIFY = 'hourglass_empty',
+  SUBMITTED = 'send'
+}

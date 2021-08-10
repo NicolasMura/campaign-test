@@ -80,7 +80,6 @@ export class CampaignUpdateComponent implements OnInit {
       this.campaignService.getAllBrands()
       .toPromise()
       .then((brands: Brand[]) => {
-        console.log(brands);
         resolve(brands);
       }, error => {
         console.error(error);
@@ -97,56 +96,3 @@ export class CampaignUpdateComponent implements OnInit {
   }
 
 }
-
-
-
-
-
-
-
-
-// import { Component, OnInit } from '@angular/core';
-// import { CoreConstants } from 'projects/lib-mycloud/src/lib/core/core-constants';
-// import { PermissionService } from 'projects/lib-mycloud/src/lib/shared/services/permission.service';
-// import { NotificationService } from 'projects/lib-mycloud/src/lib/shared/services/notification.service';
-// import { Permission } from 'projects/lib-mycloud/src/lib/shared/models/permission.model';
-// import { fadeInOutAnimation } from 'projects/lib-mycloud/src/lib/shared/animations/animations';
-// import { Campaign } from '@campaign-test/models';
-
-// /*
-//  * Permission Update Page Component
-//  */
-// @Component({
-//   selector: 'mc-admin-permission-update',
-//   templateUrl: './admin-permission-update.component.html',
-//   styleUrls: ['./admin-permission-update.component.scss'],
-//   animations: [fadeInOutAnimation]
-// })
-// export class AdminPermissionUpdateComponent implements OnInit {
-//   /**
-//    * Permission displayed in form
-//    */
-//   public permission: Permission;
-//   /**
-//    * Boolean that allows to display a loading spinner if form is being built or submitted
-//    */
-//   public showFormLoadingSpinner = true;
-
-//   constructor(
-//     private router: Router,
-//     public route: ActivatedRoute,
-//     private permissionService: PermissionService,
-//     protected notificationService: NotificationService
-//   ) {}
-
-//   ngOnInit(): void {
-    
-//   }
-
-//   /**
-//    * Go back to permissions list
-//    */
-//   public goToPermissionsList(): void {
-//     this.router.navigate([CoreConstants.routePath.admin.permissions.root]);
-//   }
-// }

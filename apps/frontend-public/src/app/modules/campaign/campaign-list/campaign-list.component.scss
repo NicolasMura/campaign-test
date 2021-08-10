@@ -1,4 +1,86 @@
+@import 'app-material-theme';
+
+.title {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  font-size: 30px;
+}
+
 .search {
   width: 300px;
   margin-right: 20px;
+}
+
+.campaigns-table {
+  .mat-cell,
+  .mat-header-cell {
+    &.status {
+      flex: inherit;
+      width: 120px;
+    }
+  }
+
+  .mat-cell,
+  .mat-header-cell {
+    &.campaignName {
+      flex:inherit;
+      width: 300px;
+    }
+  }
+
+  .mat-header-row.campaign {
+    border: none;
+  }
+
+  .mat-row.campaign {
+    margin-bottom: 10px;
+    border: 1px solid lightgrey;
+    background-color: aliceblue;
+
+    &:last-child {
+      margin-bottom: inherit;
+    }
+
+    .mat-cell {
+      &.status {
+        > div {
+          flex-direction: column;
+          justify-content: center;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          border-right: 1px solid lightgrey;
+          width: 100%;
+          margin-right: 10px;
+
+          .mat-icon {
+            &.ok {
+              color: greenyellow;
+            }
+
+            &.nok {
+              color: $cpt-warn;
+            }
+          }
+        }
+      }
+
+      &.advice div {
+        padding: 2px 5px;
+
+        &.true {
+          background-color: $cpt-warn;
+        }
+
+        &.false {
+          background-color: lightgrey;
+        }
+      }
+
+      &.flex-end {
+        justify-content: flex-end;
+      }
+    }
+  }
 }

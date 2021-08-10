@@ -1,4 +1,4 @@
-<div class="admin-form">
+<div class="form-container">
   <div class="title">Update campaign</div>
 
   <form [formGroup]="campaignForm" #form>
@@ -11,7 +11,7 @@
       <div class="inputs">
 
         <!-- Brand -->
-        <div>Brand *</div>
+        <div class="label">Brand *</div>
         <mat-form-field appearance="fill">
           <!-- <mat-label>Brand *</mat-label> -->
           <mat-select formControlName="brandId">
@@ -25,7 +25,7 @@
         </mat-form-field>
 
         <!-- Name -->
-        <div>Campaign name *</div>
+        <div class="label">Campaign name *</div>
         <mat-form-field appearance="fill" floatLabel="always">
           <!-- <mat-label>Campaign name *</mat-label> -->
           <input matInput type="text" formControlName="campaignName" placeholder="Ex.: Campagne Test 6">
@@ -35,8 +35,8 @@
         </mat-form-field>
 
         <!-- Medias -->
-        <div>Media *</div>
-        <div formArrayName="media">
+        <div class="label">Media *</div>
+        <div formArrayName="media" class="media">
           <mat-checkbox *ngFor="let media of medias; let i = index" [checked]="check(media)" (change)="onCbChange($event, media)">{{ media.value }}</mat-checkbox>
           <mat-error *ngIf="campaignForm.controls['media'].hasError('required')">
             At least one value is required
@@ -44,7 +44,7 @@
         </div>
 
         <!-- Deadline date -->
-        <div>Deadline for decision *</div>
+        <div class="label">Deadline for decision *</div>
         <mat-form-field appearance="fill" (click)="picker.open()">
           <mat-label>Choose a date</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="decisionDeadline" readonly>
@@ -69,8 +69,8 @@
     </div>
 
     <!-- Debug form START -->
-    <pre style="font-size:15px">DEBUG</pre>
-    <pre style="font-size:15px">{{ campaignForm?.getRawValue() | json }}</pre>
+    <!-- <pre style="font-size:15px">DEBUG</pre>
+    <pre style="font-size:15px">{{ campaignForm?.getRawValue() | json }}</pre> -->
     <!-- Debug form END -->
   </form>
 </div>

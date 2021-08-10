@@ -18,7 +18,7 @@ html, body {
 
 body {
   margin: 0;
-  background-color: $mycloud-bg-color-darker;
+  background-color: $cpt-bg-color-darker;
 
   p {
     margin: 0;
@@ -27,15 +27,5 @@ body {
 }
 
 ::selection {
-  background: lighten($mc-secondary, 10%);
-}
-
-.mc-color-primary {
-  color: $mc-primary;
-}
-
-/* change chrome autocomplete color */
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px white inset;
-  box-shadow: 0 0 0 30px white inset;
+  background: lighten($cpt-secondary, 10%);
 }

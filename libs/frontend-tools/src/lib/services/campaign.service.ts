@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { delay, catchError, map, tap } from 'rxjs/operators';
 import { environment } from '@campaign-test/frontend-tools';
 import { Brand, Campaign } from '@campaign-test/models';
@@ -56,8 +56,8 @@ export class CampaignService extends GlobalService {
    * Retrieve the list of brands - API call
    */
    public getAllBrandsFromApi(): Observable<Brand[]> {
-    const url = `${this.baseUrlCampaign}/brands`; // API endpoint (if we use real API)
-    // const url = MOCK_URL_BRANDS; // Static JSON Mock (if we don't use real API)
+    // const url = `${this.baseUrlCampaign}/brands`; // API endpoint (if we use real API)
+    const url = MOCK_URL_BRANDS; // Static JSON Mock (if we don't use real API)
 
     return this.http.get<Brand[]>(url);
   }
@@ -71,7 +71,7 @@ export class CampaignService extends GlobalService {
       .pipe(
         // retry(3),
         // timeout(5000),
-        delay(1000),
+        // delay(1000),
         map((brands: Brand[]) => {
           const brandsWellFormatted: Brand[] = brands.map((brand: Brand) => new Brand({
             brandId: brand.brandId,
@@ -92,8 +92,8 @@ export class CampaignService extends GlobalService {
    * Retrieve the list of campaigns - API call
    */
    public getAllCampaignsFromApi(): Observable<{ totalVolume: number, requests: Campaign[]}> {
-    const url = `${this.baseUrlCampaign}/campaigns`; // API endpoint (if we use real API)
-    // const url = MOCK_URL_PAYLOAD_RMP; // Static JSON Mock (if we don't use real API)
+    // const url = `${this.baseUrlCampaign}/campaigns`; // API endpoint (if we use real API)
+    const url = MOCK_URL_PAYLOAD_RMP; // Static JSON Mock (if we don't use real API)
 
     return this.http.get<{ totalVolume: number, requests: Campaign[]}>(url);
   }
@@ -101,7 +101,7 @@ export class CampaignService extends GlobalService {
   /**
    * Process the list of campaigns - Middleware
    */
-   public getAllCampaigns(): Observable<Campaign[]> {
+  public getAllCampaigns(): Observable<Campaign[]> {
 
     return this.getAllCampaignsFromApi()
       .pipe(
@@ -145,9 +145,15 @@ export class CampaignService extends GlobalService {
 
           // Sort them by id
           this.availableBrands.sort((b1: Brand, b2: Brand) => b1.brandId - b2.brandId);
-          console.log(this.availableBrands);
         }),
         catchError(error => this.handleError(error))
       )
+  }
+
+  /**
+   * Update campaign - API call (Mock)
+   */
+  public updateCampaign(campaign: Campaign): Observable<Campaign> {
+    return of(campaign).pipe(delay(1000));
   }
 }
