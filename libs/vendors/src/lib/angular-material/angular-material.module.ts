@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
@@ -15,6 +16,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 
 
+/**
+ * Custom date parse and display
+ */
 export const CUSTOM_DATE_FORMATS = {
   parse: {
     dateInput: 'DD-MM-YYYY',
@@ -36,6 +40,7 @@ export const CUSTOM_DATE_FORMATS = {
     MatIconModule,
     MatSnackBarModule,
     MatTableModule,
+    MatPaginatorModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatInputModule,

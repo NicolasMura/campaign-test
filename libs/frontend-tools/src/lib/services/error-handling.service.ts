@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { NotificationService } from './notification.service';
 
 
@@ -12,7 +11,6 @@ import { NotificationService } from './notification.service';
 export class ErrorHandlingService {
 
   constructor(
-    private router: Router,
     private notificationService: NotificationService
   ) { }
 
@@ -39,9 +37,6 @@ export class ErrorHandlingService {
       // ...
 
       default:
-        // this.translateService.get('error.defaultError').subscribe((defaultErrorRes: {title, body}) => {
-        //   this.notificationService.sendNotification(defaultErrorRes + ' - ' + userErrorMsg, '');
-        // });
         this.notificationService.sendNotification(userErrorMsg);
         break;
     }

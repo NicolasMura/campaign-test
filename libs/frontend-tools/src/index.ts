@@ -6,3 +6,4 @@ export * from './lib/services/global-service.service';
 export * from './lib/services/notification.service';
 export * from './lib/services/campaign.service';
 export * from './lib/animations/fade-in-out.animation';
+export * from './lib/components/something-is-broken/something-is-broken.component';

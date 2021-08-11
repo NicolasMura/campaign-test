@@ -13,7 +13,7 @@
         <!-- Brand -->
         <div class="label">Brand *</div>
         <mat-form-field appearance="fill">
-          <!-- <mat-label>Brand *</mat-label> -->
+          <mat-label>Select a brand</mat-label>
           <mat-select formControlName="brandId">
             <mat-option *ngFor="let brand of brands" [value]="brand.brandId" class="with-icons">
               {{ brand.name }}
@@ -27,7 +27,7 @@
         <!-- Name -->
         <div class="label">Campaign name *</div>
         <mat-form-field appearance="fill" floatLabel="always">
-          <!-- <mat-label>Campaign name *</mat-label> -->
+          <mat-label>Enter the brand's name</mat-label>
           <input matInput type="text" formControlName="campaignName" placeholder="Ex.: Campagne Test 6">
           <mat-error *ngIf="campaignForm.controls['campaignName'].hasError('required')">
             Field is required
@@ -37,7 +37,11 @@
         <!-- Medias -->
         <div class="label">Media *</div>
         <div formArrayName="media" class="media">
-          <mat-checkbox *ngFor="let media of medias; let i = index" [checked]="check(media)" (change)="onCbChange($event, media)">{{ media.value }}</mat-checkbox>
+          <mat-checkbox color="primary"
+                        *ngFor="let media of medias; let i = index" [checked]="check(media)"
+                        (change)="onMediaChange($event, media)">
+            {{ media.value }}
+          </mat-checkbox>
           <mat-error *ngIf="campaignForm.controls['media'].hasError('required')">
             At least one value is required
           </mat-error>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CoreConstants, CampaignService, NotificationService, fadeInOutAnimation } from '@campaign-test/frontend-tools';
+import { CoreConstants, CampaignService, fadeInOutAnimation } from '@campaign-test/frontend-tools';
 import { Brand, Campaign } from '@campaign-test/models';
 
 
@@ -12,7 +12,7 @@ import { Brand, Campaign } from '@campaign-test/models';
 })
 export class CampaignUpdateComponent implements OnInit {
   /**
-   * Campaign displayed in the form
+   * Campaign for campaign-test-campaign-form component input
    */
   public campaign: Campaign = null as any;
   /**
@@ -23,8 +23,8 @@ export class CampaignUpdateComponent implements OnInit {
    * Error management
    */
   public errors: {
-    getAvailableBrands: boolean // true if available brands can't be retrieved,
-    somethingIsBroken: {
+    getAvailableBrands: boolean // true if available brands can't be retrieved
+    somethingIsBroken: {        // handle HTTP errors
       statusCode: string,
       statusMessage: string
     }
@@ -39,8 +39,7 @@ export class CampaignUpdateComponent implements OnInit {
   constructor(
     private router: Router,
     public route: ActivatedRoute,
-    public campaignService: CampaignService,
-    private notificationService: NotificationService
+    public campaignService: CampaignService
   ) { }
 
   ngOnInit(): void {
@@ -51,7 +50,7 @@ export class CampaignUpdateComponent implements OnInit {
     }
 
     // Normally, we should be able to access directly to this route, retrieve the campaign details from API with its requestId and then test if it exists or not
-    // Here we have no endpoint yet for that, hence we use the service variable this.campaignService.selectedCampaign to store details
+    // Here we have no endpoint yet for that, hence we use the service variable this.campaignService.selectedCampaign to store the details
     if (this.campaignService.selectedCampaign) {
       this.campaign = this.campaignService.selectedCampaign;
 

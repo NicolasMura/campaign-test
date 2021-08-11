@@ -14,6 +14,7 @@ const MOCK_URL_PAYLOAD_RMP  = './assets/json-mocks/payload-rmp.json';
 
 /**
  * Campaign Service
+ * API interfaces and middleware process for Campaigns management
  */
 @Injectable({
   providedIn: 'root'
@@ -23,10 +24,6 @@ export class CampaignService extends GlobalService {
    * API endpoint
    */
   public baseUrlCampaign = environment.backendApi.baseUrlCampaign;
-  /**
-   * API endpoint
-   */
-  public campaignsList: Brand[] = [];
   /**
    * Selected campaign for update
    */
@@ -40,7 +37,11 @@ export class CampaignService extends GlobalService {
    */
   public availableBrands: Brand[] = [];
   /**
-   * Selected campaign for update
+   * User search string input to filter campaings (doubled binded using ngModel)
+   */
+  public searchInput = '';
+  /**
+   * Selected brand to filter campaings
    */
   public selectedBrand: Brand | null = null;
 
@@ -55,7 +56,7 @@ export class CampaignService extends GlobalService {
   /**
    * Retrieve the list of brands - API call
    */
-   public getAllBrandsFromApi(): Observable<Brand[]> {
+  public getAllBrandsFromApi(): Observable<Brand[]> {
     // const url = `${this.baseUrlCampaign}/brands`; // API endpoint (if we use real API)
     const url = MOCK_URL_BRANDS; // Static JSON Mock (if we don't use real API)
 
@@ -65,19 +66,15 @@ export class CampaignService extends GlobalService {
   /**
    * Process the list of brands - Middleware
    */
-   public getAllBrands(): Observable<Brand[]> {
+  public getAllBrands(): Observable<Brand[]> {
 
     return this.getAllBrandsFromApi()
       .pipe(
-        // retry(3),
-        // timeout(5000),
-        // delay(1000),
         map((brands: Brand[]) => {
           const brandsWellFormatted: Brand[] = brands.map((brand: Brand) => new Brand({
             brandId: brand.brandId,
             name: brand.name
           }));
-          // console.log(brandsWellFormatted[0].constructor.name);
 
           // store the value in the service
           this.allBrands = brandsWellFormatted;
@@ -91,7 +88,7 @@ export class CampaignService extends GlobalService {
   /**
    * Retrieve the list of campaigns - API call
    */
-   public getAllCampaignsFromApi(): Observable<{ totalVolume: number, requests: Campaign[]}> {
+  public getAllCampaignsFromApi(): Observable<{ totalVolume: number, requests: Campaign[]}> {
     // const url = `${this.baseUrlCampaign}/campaigns`; // API endpoint (if we use real API)
     const url = MOCK_URL_PAYLOAD_RMP; // Static JSON Mock (if we don't use real API)
 
@@ -105,7 +102,6 @@ export class CampaignService extends GlobalService {
 
     return this.getAllCampaignsFromApi()
       .pipe(
-        // delay(1000),
         map((response: { totalVolume: number, requests: Campaign[]}) => response.requests),
         map((campaigns: Campaign[]) => {
           const campaignsWellFormatted: Campaign[] = campaigns.map((campaign: Campaign) => new Campaign({
@@ -118,7 +114,6 @@ export class CampaignService extends GlobalService {
             media: campaign.media,
             decisionDeadline: campaign.decisionDeadline
           }));
-          // console.log(campaignsWellFormatted[0].constructor.name);
           return campaignsWellFormatted;
         }),
         tap((campaigns: Campaign[]) => {
@@ -151,7 +146,7 @@ export class CampaignService extends GlobalService {
   }
 
   /**
-   * Update campaign - API call (Mock)
+   * Update campaign - API call (mocked response)
    */
   public updateCampaign(campaign: Campaign): Observable<Campaign> {
     return of(campaign).pipe(delay(1000));

@@ -1,7 +1,6 @@
 <p align="center">
-  @TODO
-  <a href="https://campaign-test.nicolasmura.com">
-    <img alt="Campaign test image" src="./apps/frontend-public/src/assets/icons/icon-384x384.png" width="400" />
+  <a href="https://campaign-test.nicolasmura.com" target="_blank">
+    <img alt="Campaign test image" src="./apps/frontend-public/src/assets/icons/favicon.ico" width="400" />
   </a>
 </p>
 
@@ -11,6 +10,7 @@ Fullstack monorepo for Campaign test project. With Angular frontend for now, but
 
 - [Campaign Test](#campaign-test)
 - [Requirements](#requirements)
+- [Demo](#demo)
 - [Quick start](#quick-start)
 - [Methodology](#methodology)
 
@@ -27,13 +27,31 @@ To contribute to this project and run it locally, you will need:
 >
 > [Microsoft VS Code editor](https://code.visualstudio.com/) is already packaged with Typescript.
 
+# Demo
+
+You can see a working online demo of this project [here](https://campaign-test.nicolasmura.com).
+
 # Quick start
 
-@TODO
+To build and run the project locally:
+
 ```bash
-  git clone @TODO
+  # clone
+  git clone https://github.com/NicolasMura/campaign-test
   cd campaign-test
+
+  # install dependencies
+  yarn install
+
+  # run with Nx
+  npx nx serve frontend-public
 ```
+
+Visit [https://localhost:4200](https://localhost:4200) in your browser.
+
+> :information_source: **_Note_**
+>
+> Data can served from a server running at `http://localhost:3000` (see [`apps/frontend-public/src/env.js`](./apps/frontend-public/src/env.js) file)
 
 # Methodology
 

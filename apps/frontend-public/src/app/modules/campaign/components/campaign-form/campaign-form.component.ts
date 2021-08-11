@@ -7,7 +7,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 
 /**
  * Campaign Form (update) Component
- * @Note this component can easily be adapted to be reusable in a create view
+ * @Note this component can easily be adapted to be reusable for a create view
  */
 @Component({
   selector: 'campaign-test-campaign-form',
@@ -45,7 +45,6 @@ export class CampaignFormComponent implements OnInit {
    */
   @Input() public set availableBrands(brands: Brand[]) {
     if (brands?.length > 0) {
-      this.campaignForm.enable();
       this.brands = brands;
     }
   }
@@ -108,18 +107,22 @@ export class CampaignFormComponent implements OnInit {
       media: new FormArray([], Validators.required),
       decisionDeadline: new FormControl('', Validators.required)
     });
-
-    this.campaignForm.disable();
   }
 
   ngOnInit(): void {
   }
 
-  check(media: Media): boolean {
+  /**
+   * Determines if a media is checked or not
+   */
+  public check(media: Media): boolean {
     return this.campaignForm.get('media')?.value.some((m: Media) => m.mediaId === media.mediaId);
   }
 
-  onCbChange(event: MatCheckboxChange, media: Media): void {
+  /**
+   * Update form when media selection changes
+   */
+  public onMediaChange(event: MatCheckboxChange, media: Media): void {
     const array: FormArray = this.campaignForm.get('media') as FormArray;
 
     if (event.checked) {
@@ -139,22 +142,22 @@ export class CampaignFormComponent implements OnInit {
   /**
    * Update campaign
    */
-   public updateCampaign(): void {
+  public updateCampaign(): void {
     if (this.campaignForm.valid) {
       this.submitLoadingSpinner = true;
-      this.campaignForm.disable();
 
       this.campaignService.updateCampaign(this.campaignForm.getRawValue())
         .subscribe((updatedCampaign: Campaign) => {
           this.submitLoadingSpinner = false;
-          this.campaignForm.enable();
-          this.notificationService.sendNotification('Permission updated successfully (fake)', '', { duration: 5000 });
+          this.notificationService.sendNotification(
+            'Campaign updated successfully (fake)',
+            '',
+            { duration: 5000, panelClass: 'success' });
           this.action.emit('update');
         }, error => {
           console.error(error);
           this.submitLoadingSpinner = false;
           this.errors.update = true;
-          this.campaignForm.enable();
         });
     }
   }

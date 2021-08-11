@@ -1,4 +1,5 @@
 @import 'app-material-theme';
+@import 'app-material-notifications';
 @import 'app-startup-loader';
 @import 'app-spinners';
 
@@ -8,9 +9,6 @@
     General
 ===============
 */
-// @TODO : https://medium.com/@aditya_tyagi/import-fonts-in-an-angular-app-the-easy-right-way-ae9e99cab551
-$roboto-font-path: "~roboto-fontface/fonts";
-// @import "~roboto-fontface/css/roboto/sass/roboto-fontface";
 
 html, body {
   height: 100%;
@@ -28,4 +26,21 @@ body {
 
 ::selection {
   background: lighten($cpt-secondary, 10%);
+}
+
+.cpt-color-green {
+  color: greenyellow;
+}
+
+.cpt-color-warn {
+  color: $cpt-warn;
+}
+
+.cpt-bg-color-warn {
+  background-color: $cpt-warn;
+  color: white;
+}
+
+.cpt-bg-color-grey {
+  background-color: lightgrey;
 }

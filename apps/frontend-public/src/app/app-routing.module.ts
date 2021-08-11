@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-// import { SomethingIsBrokenComponent } from 'projects/tools/src/lib/components/something-is-broken/something-is-broken.component';
+import { SomethingIsBrokenComponent } from '@campaign-test/frontend-tools';
 
 
 const routes: Routes = [
@@ -13,10 +13,10 @@ const routes: Routes = [
     path: 'campaigns',
     loadChildren: () => import('./modules/campaign/campaign.module').then(m => m.CampaignModule)
   },
-  // {
-  //   path: '**',
-  //   component: SomethingIsBrokenComponent
-  // }
+  {
+    path: '**',
+    component: SomethingIsBrokenComponent
+  }
 ];
 
 @NgModule({

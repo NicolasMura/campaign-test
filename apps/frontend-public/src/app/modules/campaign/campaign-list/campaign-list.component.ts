@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { CampaignService, CoreConstants, fadeInOutAnimation } from '@campaign-test/frontend-tools';
 import { Brand, Campaign, CampaignStatus, CampaignStatusIcons } from '@campaign-test/models';
 
@@ -28,14 +29,10 @@ export class CampaignListComponent implements OnInit {
    */
   public isListRefreshing = false;
   /**
-   * User search string input to filter campaings (doubled binded usiing ngModel)
-   */
-  public searchInput = '';
-  /**
    * Error management
    */
   public errors: {
-    somethingIsBroken: {
+    somethingIsBroken: { // handle HTTP errors
       statusCode: string,
       statusMessage: string
     }
@@ -46,9 +43,15 @@ export class CampaignListComponent implements OnInit {
     }
   };
   /**
+   * Set MatPaginator dynamically
+   */
+  @ViewChild(MatPaginator, { static: false }) private set paginate(matPaginator: MatPaginator) {
+    this.dataSource.paginator = matPaginator;
+  }
+  /**
    * Reference to search input ElementRef for CTRL + F event binding
    */
-  public searchInputRef: ElementRef = null as any;
+  private searchInputRef: ElementRef = null as any;
   /**
    * Set search input ElementRef dynamically
    */
@@ -60,7 +63,7 @@ export class CampaignListComponent implements OnInit {
    */
   public campaignAvailableStatus = CampaignStatus;
   /**
-   * Campaign available status icons for use in template
+   * Campaign available status icons used in template
    */
   public campaignAvailableStatusIcons = CampaignStatusIcons;
 
@@ -75,7 +78,6 @@ export class CampaignListComponent implements OnInit {
 
     this.getAllCampaigns().then((campaigns: Campaign[]) => {
       this.dataSource.data = campaigns;
-      // this.getAllBrands();
     }).catch(error => {
       this.errors.somethingIsBroken.statusCode = error.status && error.status !== 0 ? error.status.toString() : '0';
       this.errors.somethingIsBroken.statusMessage = error.message && error.message !== 0 ? error.message : 'Unknown error';
@@ -85,6 +87,9 @@ export class CampaignListComponent implements OnInit {
 
     // Custom filtering
     this.dataSource.filterPredicate = this.createCustomFilter();
+
+    // Apply current search
+    this.applySearch();
   }
 
   /**
@@ -120,10 +125,10 @@ export class CampaignListComponent implements OnInit {
   }
 
   /**
-   * Apply user search for filtering
+   * Apply user search for real-time filtering
    */
   public applySearch(): void {
-    this.dataSource.filter = JSON.stringify({ searchInput: this.searchInput, selectedBrand: this.campaignService.selectedBrand });
+    this.dataSource.filter = JSON.stringify({ searchInput: this.campaignService.searchInput, selectedBrand: this.campaignService.selectedBrand });
   }
 
   /**
@@ -131,11 +136,11 @@ export class CampaignListComponent implements OnInit {
    */
   public goToCampaignUpdate(campaign: Campaign): void {
     // Normally, we should only need the campaign id: we should then be able to retrieve the campaign details from API with its requestId and test if it exists or not
-    // Here we have no endpoint yet for that, hence we use the service variable this.campaignService.selectedCampaign to store details
+    // Here we have no endpoint yet for that, hence we use the service variable this.campaignService.selectedCampaign to store the details
     this.campaignService.selectedCampaign = campaign;
 
     this.router.navigate(
-      [campaign.requestId, CoreConstants.routePath.campaigns.update],
+      [ campaign.requestId, CoreConstants.routePath.campaigns.update ],
       {
         relativeTo: this.route
       }
