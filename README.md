@@ -12,6 +12,8 @@ Fullstack monorepo for Campaign test project. With Angular frontend for now, but
 - [Requirements](#requirements)
 - [Demo](#demo)
 - [Quick start](#quick-start)
+- [Unit tests](#unit-tests)
+- [End-to-end (E2E) tests](#end-to-end-e2e-tests)
 - [Methodology](#methodology)
 
 # Requirements
@@ -19,9 +21,8 @@ Fullstack monorepo for Campaign test project. With Angular frontend for now, but
 To contribute to this project and run it locally, you will need:
 
 * [Node JS >= v12.19.0 & NPM >= 6.14.8](https://nodejs.org/en)
-* [Angular 11.x](https://angular.io)
+* [Angular 12.x](https://angular.io)
 * [Typescript >= 4.0.5](https://www.typescriptlang.org)
-* [Docker >= 20.10.5](https://www.docker.com/)
 
 > :bulb: **_Tip_**
 >
@@ -51,7 +52,15 @@ Visit [https://localhost:4200](https://localhost:4200) in your browser.
 
 > :information_source: **_Note_**
 >
-> Data can served from a server running at `http://localhost:3000` (see [`apps/frontend-public/src/env.js`](./apps/frontend-public/src/env.js) file)
+> Data can be served from a server running at `http://localhost:3000` (see [`apps/frontend-public/src/env.js`](./apps/frontend-public/src/env.js) file)
+
+# Unit tests
+
+@TODO
+
+# End-to-end (E2E) tests
+
+@TODO
 
 # Methodology
 
@@ -93,7 +102,6 @@ Similarly, `campaign-components` module and `campaign-form` component were gener
   nx g @nrwl/angular:module modules/campaign/components/campaign-components --project frontend-public --flat true
   nx g @nrwl/angular:component modules/campaign/components/campaign-form --project frontend-public
 ```
-
 
 `campaign` service was generated inside `frontend-public` Angular library running the 'service' Angular generator with Nx project support:
 

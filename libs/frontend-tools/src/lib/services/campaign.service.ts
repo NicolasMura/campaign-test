@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { delay, catchError, map, tap } from 'rxjs/operators';
-import { environment } from '@campaign-test/frontend-tools';
+import { environment } from '../../environment';
 import { Brand, Campaign } from '@campaign-test/models';
 import { GlobalService } from './global-service.service';
 import { NotificationService } from './notification.service';

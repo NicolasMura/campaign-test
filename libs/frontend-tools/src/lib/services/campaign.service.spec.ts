@@ -3,7 +3,7 @@ import { fakeAsync, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Observable } from 'rxjs';
 import { Brand, getBrandMock } from '@campaign-test/models';
-import { environment } from '@campaign-test/frontend-tools';
+import { environment } from '../../environment';
 import { CampaignService } from './campaign.service';
 import { NotificationService } from './notification.service';
 import { ErrorHandlingService } from './error-handling.service';
