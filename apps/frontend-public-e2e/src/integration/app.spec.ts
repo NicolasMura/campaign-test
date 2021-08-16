@@ -1,13 +1,12 @@
-import { getGreeting } from '../support/app.po';
+import { getPageTitle } from '../support/app.po';
+
 
 describe('frontend-public', () => {
-  beforeEach(() => cy.visit('/'));
+  const rootUrl = `${Cypress.env('routes').root}`;
 
-  it('should display welcome message', () => {
-    // Custom command example, see `../support/commands.ts` file
-    cy.login('my-email@something.com', 'myPassword');
+  beforeEach(() => cy.visit(rootUrl));
 
-    // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome to frontend-public!');
+  it('Display welcome message', () => {
+    getPageTitle().contains('All requests');
   });
 });

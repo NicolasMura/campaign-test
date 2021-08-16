@@ -1,1 +1,2 @@
-export const getGreeting = () => cy.get('h1');
+export const getPageTitle = () => cy.get('.title');
+export const getCampaignsList = () => cy.get('[data-cy=campaigns-table] .mat-row.campaign');
