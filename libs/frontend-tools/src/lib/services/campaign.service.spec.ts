@@ -1,66 +1,31 @@
-import { HttpClient } from '@angular/common/http';
-import { fakeAsync, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { Observable } from 'rxjs';
-import { Brand, getBrandMock } from '@campaign-test/models';
-import { environment } from '../../environment';
+import { Brand, Campaign, getBrandMock, getCampaignMock } from '@campaign-test/models';
 import { CampaignService } from './campaign.service';
 import { NotificationService } from './notification.service';
 import { ErrorHandlingService } from './error-handling.service';
 
-export class TestUtilsService {
-  static createSpyObj (baseName:string, methodNames:string[]): SpyObject {
-    const obj: any = {};
 
-    for (let i = 0; i < methodNames.length; i++) {
-      obj[methodNames[i]] = jest.fn();
-    }
-    return {[baseName]:()=>obj};
-  };
-}
-
-export class SpyObject {
-  [key: string]: ()=>{[key:string]:jest.Mock} ;
-}
-
-// Fake todos and response object
+// Fake brands / campaigns
 const mockedBrands: Brand[] = [
-  getBrandMock({name: 'Fake Brand 1'}),
-  getBrandMock({name: 'Fake Brand 2'}),
-  getBrandMock({name: 'Fake Brand 3'})
+  getBrandMock({ brandId: 1, name: 'Fake Brand 1' }),
+  getBrandMock({ brandId: 2, name: 'Fake Brand 2' }),
+  getBrandMock({ brandId: 3, name: 'Fake Brand 3' })
 ];
-// const okResponse = new Response(JSON.stringify(brands), {
-//   status: 200,
-//   statusText: 'OK',
-// });
+const mockedCampaigns: Campaign[] = [
+  getCampaignMock({ campaignName: 'Fake Campaign 1' }),
+  getCampaignMock({ campaignName: 'Fake Campaign 2' }),
+  getCampaignMock({ campaignName: 'Fake Campaign 3' })
+];
 
-// JSON Mocks (if we don't user real API)
-const MOCK_URL_BRANDS = './assets/json-mocks/brands.json';
-const MOCK_URL_PAYLOAD_RMP  = './assets/json-mocks/payload-rmp.json';
+let campaignsListUrl: string;
+let campaignsListMockUrl: string;
+let brandsListUrl: string;
+let brandsListMockUrl: string;
 
 describe('CampaignService', () => {
   let campaignService: CampaignService;
   let httpTestingController: HttpTestingController;
-  const httpClientSpy = {
-    get: jest.fn()
-  };
-  // const spyHttpClient: SpyObject = TestUtilsService.createSpyObj('get',['toPromise']);
-
-  // const httpMock = {
-  //   get: jest.fn((brands: Brand[]) => brands)
-  // };
-  // const notificationServiceMock = {
-  //   get: jest.fn()
-  // };
-  // const errorHandlingServiceMock = {
-  //   get: jest.fn()
-  // };
-
-  // const httpMock = jest
-  // .spyOn(global, 'fetch')
-  // .mockImplementation(() =>
-  //   Promise.resolve({ json: () => Promise.resolve([]) })
-  // )
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -69,18 +34,16 @@ describe('CampaignService', () => {
       ],
       providers:[
         { provide: NotificationService, useValue: {} },
-        { provide: ErrorHandlingService, useValue: {} },
-        // { provide: HttpClient, useValue: httpClientSpy }
-        // { provide: HttpClient, useValue: spyHttpClient }
-        // { provide: HttpClient, useValue: httpMock }
+        { provide: ErrorHandlingService, useValue: {} }
       ]
     }).compileComponents();
     campaignService = TestBed.inject(CampaignService);
-    // service = new CampaignService(
-    //   httpMock as any,
-    //   notificationServiceMock as any,
-    //   errorHandlingServiceMock as any
-    // );
+
+    campaignsListUrl = `${campaignService.baseUrlCampaign}/campaigns`;
+    campaignsListMockUrl = './assets/json-mocks/payload-rmp.json';
+    brandsListUrl = `${campaignService.baseUrlCampaign}/brands`;
+    brandsListMockUrl = './assets/json-mocks/brands.json';
+
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 
@@ -93,47 +56,38 @@ describe('CampaignService', () => {
   });
 
   it('gets all the brands from API', async () => {
-    // // const expectedBrands: Brand[] = await campaignService.getAllBrands();
-    // httpClientSpy.get.mockReturnValueOnce(mockedBrands);
-
-    // const [err, actualBrands] = await campaignService.getAllBrands();
-
-    // expect(actualBrands).toEqual(mockedBrands);
-
-
-
-    // const mockTemplates: Template[] = [/* you know how a template should look like so mock it*/];
     // make HTTP call take flight
     campaignService.getAllBrandsFromApi().subscribe((brands: Brand[]) => {
-      console.log('BOB inside subscribe');
-      console.log(brands);
       expect(brands).toEqual(mockedBrands);
-      // expect(mockLoggingService.logger).toHaveBeenCalledWith(`User viewed templates: ${templates}`);
     });
 
     // have a handle on the HTTP call that is about to take flight
-    const req = httpTestingController.expectOne(campaignService.baseUrlCampaign);
-    // const req = httpTestingController.expectOne(MOCK_URL_BRANDS);
+    // const req = httpTestingController.expectOne(brandsListUrl);
+    const req = httpTestingController.expectOne(brandsListMockUrl);
 
-    console.log('BOB');
     expect(req.request.method).toEqual('GET');
+
     // send this request for the next HTTP call
     req.flush(mockedBrands);
   });
 
+  it('gets all the campaigns from API', async () => {
+    // make HTTP call take flight
+    campaignService.getAllCampaignsFromApi().subscribe((response: { totalVolume: number, requests: Campaign[]}) => {
+      expect(response.requests).toEqual(mockedCampaigns);
+    });
+
+    // have a handle on the HTTP call that is about to take flight
+    // const req = httpTestingController.expectOne(campaignsListUrl);
+    const req = httpTestingController.expectOne(campaignsListMockUrl);
+
+    expect(req.request.method).toEqual('GET');
+
+    // send this request for the next HTTP call
+    req.flush(mockedCampaigns);
+  });
+
+  // @TODO
   // it('gets all the brands from middleware', fakeAsync(() => {
-  //   // httpClientSpy.get.mockReturnValueOnce(mockedBrands);
-
-  //   campaignService.getAllBrandsFromApi().subscribe((brands: Brand[]) => {
-  //     expect(brands).toEqual(mockedBrands);
-  //     // expect(mockLoggingService.logger).toHaveBeenCalledWith(`User viewed templates: ${templates}`);
-  //   });
-
-  //   // have a handle on the HTTP call that is about to take flight
-  //   const req = httpTestingController.expectOne(campaignService.baseUrlCampaign);
-
-  //   expect(req.request.method).toEqual('GET');
-  //   // send this request for the next HTTP call
-  //   req.flush(mockedBrands);
   // }));
 });

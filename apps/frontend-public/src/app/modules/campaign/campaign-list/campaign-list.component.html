@@ -18,7 +18,7 @@
       <!-- Search filter -->
       <mat-form-field class="search" appearance="fill">
         <mat-label>Search by name or brand... (CTRL + F)</mat-label>
-        <input matInput type="text" [(ngModel)]="campaignService.searchInput" (input)="applySearch()" #searchInputRef>
+        <input matInput type="text" [(ngModel)]="campaignService.searchInput" (keyup)="applySearch()" #searchInputRef>
         <button mat-button *ngIf="campaignService.searchInput" matSuffix mat-icon-button aria-label="Clear"
                 (click)="campaignService.searchInput = ''; applySearch();">
           <mat-icon>close</mat-icon>

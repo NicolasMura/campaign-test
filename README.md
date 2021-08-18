@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD033 -->
+<!-- markdownlint-disable MD041 -->
 <p align="center">
   <a href="https://campaign-test.nicolasmura.com" target="_blank">
     <img alt="Campaign test image" src="./apps/frontend-public/src/assets/icons/favicon.ico" width="400" />
@@ -20,9 +22,9 @@ Fullstack monorepo for Campaign test project. With Angular frontend for now, but
 
 To contribute to this project and run it locally, you will need:
 
-* [Node JS >= v12.19.0 & NPM >= 6.14.8](https://nodejs.org/en)
-* [Angular 12.x](https://angular.io)
-* [Typescript >= 4.0.5](https://www.typescriptlang.org)
+- [Node JS >= v12.19.0 & NPM >= 6.14.8](https://nodejs.org/en)
+- [Angular 12.x](https://angular.io)
+- [Typescript >= 4.0.5](https://www.typescriptlang.org)
 
 > :bulb: **_Tip_**
 >
@@ -48,6 +50,25 @@ To build and run the project locally:
   npx nx serve frontend-public
 ```
 
+> :information_source: **_Note_**
+>
+> If you have no internet connection, you may see this error after `yarn install`, caused by Cypress trying to download and install:
+>
+> ```bash
+>   Installing Cypress (version: 7.7.0)
+>   The Cypress App could not be downloaded.
+>   Does your workplace require a proxy to be used to access the Internet? If so, you must configure the HTTP_PROXY environment variable before downloading Cypress. Read more: https://on.cypress.io/proxy-configuration 
+>   (...)
+> ```
+>
+> A common workaround - if you don't want to deal with E2E tests for now - is to bypass this installation by creating a `.npmrc` file in your project root folder and put inside:
+>
+> ```bash
+>   CYPRESS_INSTALL_BINARY=0
+> ```
+>
+> Then, try to `yarn install` again.
+
 Visit [https://localhost:4200](https://localhost:4200) in your browser.
 
 > :information_source: **_Note_**
@@ -56,11 +77,32 @@ Visit [https://localhost:4200](https://localhost:4200) in your browser.
 
 # Unit tests
 
-@TODO
+To run all unit tests with Jest, run:
+
+```bash
+  yarn test
+```
+
+To run unit tests just for `frontend-public` Angular project, run:
+
+```bash
+  npx nx frontend-public:test
+```
+
+
+To run a specific test file, let's say `apps/frontend-public/src/app/app.component.spec.ts`, run:
+
+```bash
+  npx nx test frontend-public --test-file apps/frontend-public/src/app/app.component.spec.ts
+```
 
 # End-to-end (E2E) tests
 
-@TODO
+To launch E2E tests with Cypress in watch mode while developing, stop your local server (if necessary) and run:
+
+```bash
+  npx nx e2e frontend-public-e2e --watch
+```
 
 # Methodology
 
