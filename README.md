@@ -61,15 +61,13 @@ To build and run the project locally:
 >   (...)
 > ```
 >
-> A common workaround - if you don't want to deal with E2E tests for now - is to bypass this installation by creating a `.npmrc` file in your project root folder and put inside:
+> A common workaround - if you don't want to deal with E2E tests for now - is to bypass this installation by running:
 >
 > ```bash
->   CYPRESS_INSTALL_BINARY=0
+>   CYPRESS_INSTALL_BINARY=0 yarn install
 > ```
->
-> Then, try to `yarn install` again.
 
-Visit [https://localhost:4200](https://localhost:4200) in your browser.
+Visit [http://localhost:4200](http://localhost:4200) in your browser.
 
 > :information_source: **_Note_**
 >
@@ -102,7 +100,7 @@ To run a specific test file, let's say `apps/frontend-public/src/app/app.compone
 
 # End-to-end (E2E) tests with Cypress
 
-To launch E2E tests, you will need Cypress to be installed on your machine, and stop your local server [https://localhost:4200](https://localhost:4200) before launching tests.
+To launch E2E tests, you will need Cypress to be installed on your machine, and stop your local server [http://localhost:4200](http://localhost:4200) before launching tests.
 
 To launch E2E tests with Cypress, run:
 
