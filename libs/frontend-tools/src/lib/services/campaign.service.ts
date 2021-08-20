@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { delay, catchError, map, tap } from 'rxjs/operators';
-import { environment } from '@campaign-test/frontend-tools';
+import { environment } from '../../environment';
 import { Brand, Campaign } from '@campaign-test/models';
 import { GlobalService } from './global-service.service';
 import { NotificationService } from './notification.service';
@@ -71,10 +71,10 @@ export class CampaignService extends GlobalService {
     return this.getAllBrandsFromApi()
       .pipe(
         map((brands: Brand[]) => {
-          const brandsWellFormatted: Brand[] = brands.map((brand: Brand) => new Brand({
+          const brandsWellFormatted: Brand[] = brands?.map((brand: Brand) => new Brand({
             brandId: brand.brandId,
             name: brand.name
-          }));
+          })) || [];
 
           // store the value in the service
           this.allBrands = brandsWellFormatted;
@@ -104,7 +104,7 @@ export class CampaignService extends GlobalService {
       .pipe(
         map((response: { totalVolume: number, requests: Campaign[]}) => response.requests),
         map((campaigns: Campaign[]) => {
-          const campaignsWellFormatted: Campaign[] = campaigns.map((campaign: Campaign) => new Campaign({
+          const campaignsWellFormatted: Campaign[] = campaigns?.map((campaign: Campaign) => new Campaign({
             requestId: campaign.requestId,
             campaignName: campaign.campaignName,
             advice: campaign.advice,
@@ -113,7 +113,7 @@ export class CampaignService extends GlobalService {
             requestStatus: campaign.requestStatus,
             media: campaign.media,
             decisionDeadline: campaign.decisionDeadline
-          }));
+          })) || [];
           return campaignsWellFormatted;
         }),
         tap((campaigns: Campaign[]) => {

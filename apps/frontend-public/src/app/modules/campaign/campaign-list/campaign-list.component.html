@@ -18,7 +18,7 @@
       <!-- Search filter -->
       <mat-form-field class="search" appearance="fill">
         <mat-label>Search by name or brand... (CTRL + F)</mat-label>
-        <input matInput type="text" [(ngModel)]="campaignService.searchInput" (input)="applySearch()" #searchInputRef>
+        <input matInput type="text" [(ngModel)]="campaignService.searchInput" (keyup)="applySearch()" #searchInputRef data-cy="search-input">
         <button mat-button *ngIf="campaignService.searchInput" matSuffix mat-icon-button aria-label="Clear"
                 (click)="campaignService.searchInput = ''; applySearch();">
           <mat-icon>close</mat-icon>
@@ -28,7 +28,7 @@
       <!-- Brand filter -->
       <mat-form-field appearance="fill">
         <mat-label>- Brand -</mat-label>
-        <mat-select [(ngModel)]="campaignService.selectedBrand" (selectionChange)="applySearch();">
+        <mat-select [(ngModel)]="campaignService.selectedBrand" (selectionChange)="applySearch();" data-cy="brand-select-btn">
           <mat-option>Toutes</mat-option>
           <mat-option *ngFor="let brand of campaignService?.availableBrands" [value]="brand" class="with-icons">
             {{ brand.name }}
@@ -36,7 +36,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-table [dataSource]="dataSource" class="campaigns-table">
+      <mat-table [dataSource]="dataSource" class="campaigns-table" data-cy="campaigns-table">
 
         <!-- Campaign Status column -->
         <ng-container matColumnDef="status">

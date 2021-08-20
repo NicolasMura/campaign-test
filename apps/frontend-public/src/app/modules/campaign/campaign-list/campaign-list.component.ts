@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -15,7 +15,7 @@ import { Brand, Campaign, CampaignStatus, CampaignStatusIcons } from '@campaign-
   styleUrls: ['./campaign-list.component.scss'],
   animations: [fadeInOutAnimation]
 })
-export class CampaignListComponent implements OnInit {
+export class CampaignListComponent implements OnInit, AfterViewInit {
   /**
    * Campaigns list displayed columns
    */
@@ -87,9 +87,13 @@ export class CampaignListComponent implements OnInit {
 
     // Custom filtering
     this.dataSource.filterPredicate = this.createCustomFilter();
+  }
 
-    // Apply current search
-    this.applySearch();
+  ngAfterViewInit(): void {
+    // Apply search
+    setTimeout(() => {
+      this.applySearch();
+    });
   }
 
   /**
@@ -113,8 +117,13 @@ export class CampaignListComponent implements OnInit {
    */
   private createCustomFilter(): (campaign: Campaign, filter: string) => boolean {
     const filterFunction = (campaign: Campaign, filter: string): boolean => {
-      const userSearch: { searchInput: string, selectedBrand: Brand }
-        = JSON.parse(filter);
+      const userSearch: { searchInput: string, selectedBrand: Brand | null } = JSON.parse(filter);
+      if (!userSearch.searchInput) {
+        userSearch.searchInput = '';
+      }
+      if (!userSearch.selectedBrand) {
+        userSearch.selectedBrand = null;
+      }
 
       return ((campaign?.campaignName?.trim().replace(/\s/g, '').toLowerCase().indexOf(userSearch.searchInput.trim().replace(/\s/g, '').toLowerCase()) !== -1)
         || (campaign?.brand?.name?.trim().replace(/\s/g, '').toLowerCase().indexOf(userSearch.searchInput.trim().replace(/\s/g, '').toLowerCase()) !== -1))
