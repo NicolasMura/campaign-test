@@ -1,35 +1,24 @@
-import { getCampaignMock } from '@campaign-test/models';
+import { Campaign } from '@campaign-test/models';
 
 describe('Campaigns API', () => {
-  const campaignsListUrl = `${Cypress.env('backApi').baseUrlCampaign}`;
-  const initialCampaigns = [
-    getCampaignMock({
-      requestId: 1,
-      campaignName: 'Fake Campaign 1',
-    }),
-    getCampaignMock({
-      requestId: 2,
-      campaignName: 'Fake Campaign 2',
-    })
-  ];
+  // const campaignsListApiUrl = `${Cypress.env('backApi').baseUrlCampaign}`; // API endpoint (if we use real API)
+  const campaignsListApiUrlMock = '/assets/json-mocks/payload-rmp.json'; // Static JSON Mock (if we don't use real API)
 
   it('returns JSON', () => {
-    cy.request(campaignsListUrl)
+    cy.request(campaignsListApiUrlMock)
       .its('headers')
       .its('content-type')
-      .should('include', 'application/json')
-  })
+      .should('include', 'application/json');
+  });
 
-  xit('get all campaigns', () => {
-    const campaignsListUrl = `${Cypress.env('backApi').baseUrlCampaign}`;
-
+  it.only('get all campaigns', () => {
     cy.request({
       method: 'GET',
-      url: campaignsListUrl
+      url: campaignsListApiUrlMock
     })
       .its('body')
-      .then(body => {
-        expect(body).to.have.property('access_token').and.not.be.empty;
+      .then((body: { totalVolume: number, requests: Campaign[]}) => {
+        expect(body.totalVolume).to.equal(9);
       });
   });
 });

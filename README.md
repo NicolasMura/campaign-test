@@ -8,14 +8,14 @@
 
 # Campaign Test
 
-Fullstack monorepo for Campaign test project. With Angular frontend for now, but could add a NestJS backend REST API.
+Fullstack monorepo for Campaign test project. With just Angular frontend for now, but could add a NestJS backend REST API.
 
 - [Campaign Test](#campaign-test)
 - [Requirements](#requirements)
 - [Demo](#demo)
 - [Quick start](#quick-start)
-- [Unit tests](#unit-tests)
-- [End-to-end (E2E) tests](#end-to-end-e2e-tests)
+- [Unit tests with Jest](#unit-tests-with-jest)
+- [End-to-end (E2E) tests with Cypress](#end-to-end-e2e-tests-with-cypress)
 - [Methodology](#methodology)
 
 # Requirements
@@ -73,9 +73,13 @@ Visit [https://localhost:4200](https://localhost:4200) in your browser.
 
 > :information_source: **_Note_**
 >
-> Data can be served from a server running at `http://localhost:3000` (see [`apps/frontend-public/src/env.js`](./apps/frontend-public/src/env.js) file)
+> Data can be served from a local server running at `http://localhost:3000` (see [`apps/frontend-public/src/env.js`](./apps/frontend-public/src/env.js) file). In this cas, some app and test files needs to be adapated:
+> - campaign.service.ts
+> - campaign.service.spec.ts
+> - api-campaigns.e2e.spec.ts
+> - campaign-list.e2e.spec.ts
 
-# Unit tests
+# Unit tests with Jest
 
 To run all unit tests with Jest, run:
 
@@ -96,9 +100,23 @@ To run a specific test file, let's say `apps/frontend-public/src/app/app.compone
   npx nx test frontend-public --test-file apps/frontend-public/src/app/app.component.spec.ts
 ```
 
-# End-to-end (E2E) tests
+# End-to-end (E2E) tests with Cypress
 
-To launch E2E tests with Cypress in watch mode while developing, stop your local server (if necessary) and run:
+To launch E2E tests, you will need Cypress to be installed on your machine, and stop your local server [https://localhost:4200](https://localhost:4200) before launching tests.
+
+To launch E2E tests with Cypress, run:
+
+```bash
+  npx nx e2e frontend-public-e2e --headless
+```
+
+To see what is really happening, run instead:
+
+```bash
+  npx nx e2e frontend-public-e2e
+```
+
+To launch E2E tests in watch mode, run:
 
 ```bash
   npx nx e2e frontend-public-e2e --watch

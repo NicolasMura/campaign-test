@@ -18,9 +18,9 @@ const mockedCampaigns: Campaign[] = [
   getCampaignMock({ campaignName: 'Fake Campaign 3' })
 ];
 
-let campaignsListUrl: string;
+// let campaignsListUrl: string;
 let campaignsListMockUrl: string;
-let brandsListUrl: string;
+// let brandsListUrl: string;
 let brandsListMockUrl: string;
 
 describe('CampaignService', () => {
@@ -39,9 +39,9 @@ describe('CampaignService', () => {
     }).compileComponents();
     campaignService = TestBed.inject(CampaignService);
 
-    campaignsListUrl = `${campaignService.baseUrlCampaign}/campaigns`;
+    // campaignsListUrl = `${campaignService.baseUrlCampaign}/campaigns`;
     campaignsListMockUrl = './assets/json-mocks/payload-rmp.json';
-    brandsListUrl = `${campaignService.baseUrlCampaign}/brands`;
+    // brandsListUrl = `${campaignService.baseUrlCampaign}/brands`;
     brandsListMockUrl = './assets/json-mocks/brands.json';
 
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -89,5 +89,9 @@ describe('CampaignService', () => {
 
   // @TODO
   // it('gets all the brands from middleware', fakeAsync(() => {
+  // }));
+
+  // @TODO
+  // it('gets all the campaigns from middleware', fakeAsync(() => {
   // }));
 });

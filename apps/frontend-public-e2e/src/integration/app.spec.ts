@@ -6,7 +6,7 @@ describe('frontend-public', () => {
 
   beforeEach(() => cy.visit(rootUrl));
 
-  it('Display welcome message', () => {
-    getPageTitle().contains('All requests');
+  it('Displays welcome message', () => {
+    getPageTitle().first().should('contain', 'All requests')
   });
 });
